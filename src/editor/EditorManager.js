@@ -94,7 +94,7 @@ define(function (require, exports, module) {
     var _inlineEditProviders = [];
     
     /* StatusBar indicators */
-    var $modeInfo,
+    var $languageInfo,
         $cursorInfo,
         $fileInfo,
         $indentType,
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
     
     /**
      * Creates a new Editor bound to the given Document. The editor's mode is inferred based on the
-     * file extension. The editor is appended to the given container as a visible child.
+     * document's language. The editor is appended to the given container as a visible child.
      * @param {!Document} doc  Document for the Editor's content
      * @param {!boolean} makeMasterEditor  If true, the Editor will set itself as the private "master"
      *          Editor for the Document. If false, the Editor will attach to the Document as a "slave."
@@ -244,7 +244,7 @@ define(function (require, exports, module) {
     
     /**
      * Creates a new inline Editor instance for the given Document. The editor's mode is inferred
-     * based on the file extension. The editor is not yet visible or attached to a host editor.
+     * based on the document's language. The editor is not yet visible or attached to a host editor.
      * @param {!Document} doc  Document for the Editor's content
      * @param {?{startLine:Number, endLine:Number}} range  If specified, all lines outside the given
      *      range are hidden from the editor. Range is inclusive. Line numbers start at 0.
@@ -640,8 +640,8 @@ define(function (require, exports, module) {
         return result.promise();
     }
     
-    function _updateModeInfo(editor) {
-        $modeInfo.text(editor.document.getLanguage().name);
+    function _updateLanguageInfo(editor) {
+        $languageInfo.text(editor.document.getLanguage().name);
     }
     
     function _updateFileInfo(editor) {
@@ -725,7 +725,7 @@ define(function (require, exports, module) {
             });
             
             _updateCursorInfo(null, current);
-            _updateModeInfo(current);
+            _updateLanguageInfo(current);
             _updateFileInfo(current);
             _updateIndentType();
             _updateIndentSize();
@@ -735,7 +735,7 @@ define(function (require, exports, module) {
     function _init() {
         StatusBar.init($(".main-view .content"));
 
-        $modeInfo           = $("#status-mode");
+        $languageInfo       = $("#status-language");
         $cursorInfo         = $("#status-cursor");
         $fileInfo           = $("#status-file");
         $indentType         = $("#indent-type");
